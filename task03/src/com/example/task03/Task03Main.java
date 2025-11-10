@@ -1,5 +1,6 @@
 package com.example.task03;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -15,7 +16,17 @@ public class Task03Main {
     }
 
     public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
-        // your implementation here
-        return "";
+        if (inputStream == null || charset == null) {
+            throw new IllegalArgumentException("");
+        }
+
+        java.util.Scanner sc = new java.util.Scanner(inputStream, charset.name());
+        sc.useDelimiter("\\A");              // читаем весь поток одним токеном
+        String result = sc.next();
+
+        IOException ioex = sc.ioException();
+        if (ioex != null) throw ioex;
+
+        return result;
     }
 }
